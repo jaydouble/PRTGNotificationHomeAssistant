@@ -10,6 +10,7 @@ namespace PRTGNotificationHomeAssistant
     {
         static void Main(string[] args)
         {
+            // add a piece of comment
         }
     }
 }
