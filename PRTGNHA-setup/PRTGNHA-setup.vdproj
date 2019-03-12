@@ -249,6 +249,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_4FE457634EC44CB89FEF1FF271C13AEE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_50CA43FFC101705A72029B166D69ED86"
         "OwnerKey" = "8:_E33B9344A6B2401FAADFF7EB89D92B71"
         "MsmSig" = "8:_UNDEFINED"
@@ -795,6 +801,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_649481A917444FF3B6814F9C1E249468"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_66CECF56CA8D9ECCEB6FD466822C0A56"
         "OwnerKey" = "8:_E33B9344A6B2401FAADFF7EB89D92B71"
         "MsmSig" = "8:_UNDEFINED"
@@ -821,6 +833,12 @@
         {
         "MsmKey" = "8:_6EB96C15E3604DF512CDF9DFED395E47"
         "OwnerKey" = "8:_E33B9344A6B2401FAADFF7EB89D92B71"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6EB96C15E3604DF512CDF9DFED395E47"
+        "OwnerKey" = "8:_649481A917444FF3B6814F9C1E249468"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -995,6 +1013,12 @@
         {
         "MsmKey" = "8:_8E2671F5A3407D475B6C247042E3FA1E"
         "OwnerKey" = "8:_60A9D93C227EC5D37F680E9EDEE378C2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9138ED7F5CD5448CA9104DD20026C9BB"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1624,6 +1648,12 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_649481A917444FF3B6814F9C1E249468"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_9C9D04C45B82D145784AD62270F3BB7D"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1877,32 +1907,18 @@
     {
         "CustomAction"
         {
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_91B1A772D824446099EB8C89E796362A"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_BCD9345B8CCE46DDADC0865AFC1C3FA9"
             {
-            "Name" = "8:Primary output from PRTGNotificationHomeAssistant (Active)"
+            "Name" = "8:SetupHelper"
             "Condition" = "8:"
-            "Object" = "8:_E33B9344A6B2401FAADFF7EB89D92B71"
+            "Object" = "8:_649481A917444FF3B6814F9C1E249468"
             "FileType" = "3:2"
             "InstallAction" = "3:2"
-            "Arguments" = "8:"
+            "Arguments" = "8:\"[TARGETDIR]\""
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_CE885FE0_5394_4969_B35D_7E31DFD58B3D"
-            "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:"
-            }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_EA2A21D80425411D882095CBC0B68CA7"
-            {
-            "Name" = "8:Primary output from PRTGNotificationHomeAssistant (Active)"
-            "Condition" = "8:"
-            "Object" = "8:_E33B9344A6B2401FAADFF7EB89D92B71"
-            "FileType" = "3:2"
-            "InstallAction" = "3:1"
-            "Arguments" = "8:/DP_TargetDir=\"[TARGETDIR]\\\" /DP_ProductID=\"[ProductCode]\""
-            "EntryPoint" = "8:"
-            "Sequence" = "3:1"
-            "Identifier" = "8:_6BEF7FC6_4F53_4918_9CFE_C2E6583AB150"
-            "InstallerClass" = "11:TRUE"
+            "Identifier" = "8:_8CEB3813_CDEE_41D0_8A7D_810503DFC3D7"
+            "InstallerClass" = "11:FALSE"
             "CustomActionData" = "8:"
             }
         }
@@ -2670,6 +2686,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4FE457634EC44CB89FEF1FF271C13AEE"
+            {
+            "SourcePath" = "8:..\\PRTGNotificationHomeAssistant\\bin\\Release\\x86\\SQLite.Interop.dll"
+            "TargetName" = "8:SQLite.Interop.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_3E2967DB07EE4BE98947F56C95B5CC7A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_50CA43FFC101705A72029B166D69ED86"
@@ -3600,6 +3636,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9138ED7F5CD5448CA9104DD20026C9BB"
+            {
+            "SourcePath" = "8:..\\PRTGNotificationHomeAssistant\\bin\\Release\\x64\\SQLite.Interop.dll"
+            "TargetName" = "8:SQLite.Interop.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B27C9A8EFDF947318CEA193454E5D236"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_91608B9135051CDE14A54A99768BC82E"
@@ -5591,6 +5647,39 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_3E2967DB07EE4BE98947F56C95B5CC7A"
+                    {
+                    "Name" = "8:x86"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_F66B0E77D5714D76B011C7B5A979FFB9"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_6D5B9EA33CAF4C9EBDFE8E3FA75C5550"
+                    {
+                    "Name" = "8:SetupHelper"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_50B2A6F6EAD648AB9B94DE99CF75F205"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_B27C9A8EFDF947318CEA193454E5D236"
+                    {
+                    "Name" = "8:x64"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_5D4A73F6760F402091028FD64B767183"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_A7E7613A0A5E471F8BF64FEF7EFBC21C"
@@ -5632,11 +5721,11 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PRTG Notification 2 Home Assistant"
         "ProductCode" = "8:{260BDAA5-4110-4BF3-AAD5-E7D167231F36}"
-        "PackageCode" = "8:{691FB93A-C300-455E-B9A6-274B74525B34}"
+        "PackageCode" = "8:{A95EEF25-F10C-46FE-B385-48ECF4153310}"
         "UpgradeCode" = "8:{FA8F6A2F-BD3B-442D-B405-EC3E68094590}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
@@ -6151,6 +6240,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_649481A917444FF3B6814F9C1E249468"
+            {
+            "SourcePath" = "8:..\\SetupHelper\\obj\\Release\\SetupHelper.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_6D5B9EA33CAF4C9EBDFE8E3FA75C5550"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{4B914C97-ABAA-4F08-B941-BF48950D947C}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E33B9344A6B2401FAADFF7EB89D92B71"
             {
             "SourcePath" = "8:..\\PRTGNotificationHomeAssistant\\obj\\Release\\PRTGNotificationHomeAssistant.exe"

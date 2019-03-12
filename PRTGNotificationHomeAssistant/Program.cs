@@ -68,7 +68,7 @@ namespace PRTGNotificationHomeAssistant
         }
 
         private static List<Color> colors;
-        private static readonly string sqliteFile = "database.sqlite";
+        private static readonly string sqliteFile = System.IO.Path.GetTempPath() + "\\database.sqlite";
         
         static void Main(string[] args)
         {
@@ -144,10 +144,13 @@ namespace PRTGNotificationHomeAssistant
                 {
                     Console.Write("Color: " + c);
                     Color selectedColor = colors.Where(i => i.Hex == c).FirstOrDefault();
-                    Console.WriteLine(" " + selectedColor.Name);
-                    if (selectedColor.Brightness > pushedcolor.Brightness)
+                    if (selectedColor != null)
                     {
-                        pushedcolor = selectedColor;
+                        Console.WriteLine(" " + selectedColor.Name);
+                        if (selectedColor.Brightness > pushedcolor.Brightness)
+                        {
+                            pushedcolor = selectedColor;
+                        }
                     }
                 }
                 // we now have the most important color. So we now pushed that to the api.

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRTGNotificationHomeAssista
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PRTGNHA-setup", "PRTGNHA-setup\PRTGNHA-setup.vdproj", "{05A950FB-5598-429E-A8D4-B27BAD099982}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetupHelper", "SetupHelper\SetupHelper.csproj", "{4B914C97-ABAA-4F08-B941-BF48950D947C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{05A950FB-5598-429E-A8D4-B27BAD099982}.Debug|Any CPU.ActiveCfg = Debug
 		{05A950FB-5598-429E-A8D4-B27BAD099982}.Release|Any CPU.ActiveCfg = Release
 		{05A950FB-5598-429E-A8D4-B27BAD099982}.Release|Any CPU.Build.0 = Release
+		{4B914C97-ABAA-4F08-B941-BF48950D947C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B914C97-ABAA-4F08-B941-BF48950D947C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B914C97-ABAA-4F08-B941-BF48950D947C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B914C97-ABAA-4F08-B941-BF48950D947C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
