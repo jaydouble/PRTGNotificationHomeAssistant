@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("PRTGNotificationHomeAssistant")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Push PRTG Notification to Home Assistant")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Jelte van Woudenbergh")]
 [assembly: AssemblyProduct("PRTGNotificationHomeAssistant")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
