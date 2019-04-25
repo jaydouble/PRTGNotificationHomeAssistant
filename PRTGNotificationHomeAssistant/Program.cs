@@ -168,7 +168,13 @@ namespace PRTGNotificationHomeAssistant
                 string json = JsonConvert.SerializeObject(hap, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
                 try
                 {
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(opts.Url + "/api/services/light/turn_on");
+                    // during non-office hours turn it off
+                    var date = DateTime.Now;
+                    string action = "turn_on";
+                    if (date.Hour > 17 || date.Hour < 8){
+                        action = "turn_off";
+                    }
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(opts.Url + "/api/services/light/" + action);
                     httpWebRequest.ContentType = "application/json";
                     httpWebRequest.Method = "POST";
                     httpWebRequest.Headers.Add("Authorization", "Bearer " + opts.Key);
