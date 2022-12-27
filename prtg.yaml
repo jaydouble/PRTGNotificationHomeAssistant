@@ -1,0 +1,186 @@
+homeassistant:
+  customize:
+    sensor.prtg_alarms:
+      icon: mdi:close-circle-outline
+      state_color: red
+    sensor.prtg_upsens:
+      icon: mdi:check-circle-outline
+      state_color: green
+    sensor.prtg_unknownsens:
+      icon: mdi:help-circle-outline
+      state_color: grey
+    sensor.prtg_warnsens:
+      icon: mdi:alert-circle-outline
+      state_color: orange
+    sensor.prtg_pausedsens:
+      icon: mdi:pause-circle-outline
+      state_color: blue
+    sensor.prtgsensors:
+      icon: mdi:motion-sensor
+      state_color: blue
+    sensor.prtg_script:
+      icon: mdi:script-text-play-outline
+      state_color: purple
+    automation.lightson:
+      icon: mdi:light-switch
+    automation.lightsoff:
+      icon: mdi:light-switch-off
+
+sensor:
+  - platform: rest
+    name: PrtgSensors
+    resource: !secret prtg-url
+    params:
+      id: 0
+      apitoken: !secret prtg-api-token
+    json_attributes:
+      - Alarms
+      - UpSens
+      - WarnSens
+      - PausedSens
+      - UnknownSens
+    value_template: >
+      {% if state_attr('sensor.prtgsensors', 'Alarms')|int(0) > 0 %}
+      {{ state_attr('sensor.prtgsensors', 'Alarms') }} Alarms
+      {% elif state_attr('sensor.prtgsensors', 'WarnSens')|int(0) > 0 %}
+      {{ state_attr('sensor.prtgsensors', 'WarnSens') }} Warnings
+      {% elif state_attr('sensor.prtgsensors', 'PausedSens')|int(0) > 0 %}
+      {{ state_attr('sensor.prtgsensors', 'PausedSens') }} Paused
+      {% endif %}
+  - platform: template
+    sensors:
+      prtg_alarms:
+        friendly_name: "PRTG Alarm"
+        value_template: "{{ state_attr('sensor.prtgsensors', 'Alarms') | int(0)}}"
+      prtg_upsens:
+        friendly_name: "PRTG UpSens"
+        value_template: "{{ state_attr('sensor.prtgsensors', 'UpSens') | int(0) }}"
+      prtg_unknownsens:
+        friendly_name: "PRTG UnknownSens"
+        value_template: "{{ state_attr('sensor.prtgsensors', 'UnknownSens') | int(0) }}"
+      prtg_warnsens:
+        friendly_name: "PRTG WarnSens"
+        value_template: "{{ state_attr('sensor.prtgsensors', 'WarnSens') | int(0) }}"
+      prtg_pausedsens:
+        friendly_name: "PRTG PausedSens"
+        value_template: "{{ state_attr('sensor.prtgsensors', 'PausedSens') | int(0) }}"
+      # helper sensors for light
+      prtg_script:
+        friendly_name: "PRTG Alarm Color"
+        value_template: >
+          {% if state_attr('sensor.prtgsensors', 'Alarms')|int(0) > 0 %}
+          prtg_alarm
+          {% elif state_attr('sensor.prtgsensors', 'WarnSens')|int(0) > 0 %}
+          prtg_warning
+          {% elif state_attr('sensor.prtgsensors', 'PausedSens')|int(0) > 0 %}
+          prtg_paused
+          {% else %}
+          prtg_ok
+          {% endif %}
+
+script:
+  prtg_alarm:
+    alias: PRTG Alarm
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: "{{ light }}"
+          color_name: red
+          brightness: 255
+          flash: long
+    mode: single
+    icon: mdi:close-circle-outline
+
+  prtg_warning:
+    alias: PRTG Warning
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: "{{ light }}"
+          color_name: orange
+          brightness: 127
+          flash: long
+    mode: single
+    icon: mdi:alert-circle-outline
+
+  prtg_paused:
+    alias: PRTG Paused
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: "{{ light }}"
+          color_name: blue
+          brightness: 55
+    mode: single
+    icon: mdi:pause-circle-outline
+
+  prtg_ok:
+    alias: PRTG OK
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: "{{ light }}"
+          color_name: green
+          brightness: 3
+    mode: single
+    icon: mdi:check-circle-outline
+
+input_datetime:
+  lighton:
+    name: Turn light every weekday on at
+    has_date: false
+    has_time: true
+    icon: mdi:light-switch
+    initial: "08:00"
+  lightoff:
+    name: Turn light off at
+    has_date: false
+    has_time: true
+    icon: mdi:light-switch-off
+    initial: "17:00"
+
+automation:
+  - alias: Light from PRTG
+    description: ""
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.prtgsensors
+    condition:
+      - condition: state
+        entity_id: light.noc
+        state: "on"
+    action:
+      service: "script.{{ states('sensor.prtg_script') }}"
+      data:
+        light: !secret noclight
+    mode: single
+
+  - alias: lightson
+    description: "Turn lights on"
+    trigger:
+      - platform: time
+        at: input_datetime.lighton
+    condition:
+      - condition: time
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+    action:
+      service: "script.{{ states('sensor.prtg_script') }}"
+      data:
+        light: !secret noclight
+    mode: single
+
+  - alias: lightsoff
+    description: "Turn lights off"
+    trigger:
+      - platform: time
+        at: input_datetime.lightoff
+    action:
+      - service: light.turn_off
+        entity_id: !secret noclight
+    mode: single

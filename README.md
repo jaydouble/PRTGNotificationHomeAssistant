@@ -1,44 +1,63 @@
-# PRTGNotificationHomeAssistant
-PRTG notification to Home Assistant
+# PRTG config in Home Assistant
 
-With this tool, you can get a alarm notification from PRTG.
+This new approach of getting notified by blinking lights when some alarm happend in PRTG is not using the notification in PRTG anymore, but using Home Assistant to poll stats from PRTG and then use that to blinking lights.
 
-With this command you can setup a notification for PRTG
+To make this happen:
 
+#### copy files:
+Copy ```prtg.yaml``` into your packages directory
+
+If you don't have a package folder, you can create one, and then add to configuration.yaml:
+```yaml
+homeassistant:
+  packages: !include_dir_named packages
 ```
-PRTGNotificationHomeAssistant.exe --key "long generated key" -u "http://homeassisanturl" -l "light.noc" -c %colorofstate -s %sensorid
+
+Then you need to add some secrets:
+```yaml
+prtg-api-token: long-random-token
+prtg-url: {full prtg url}/api/getstatus.htm
+noclight: light.name
+```
+by example:
+```yaml
+prtg-api-token: long-random-token
+prtg-url: https://prtg.cloudblabla.tld/api/getstatus.htm
+noclight: light.noc
 ```
 
-Setup PRTG
-- First create a notification Template
-	- Sign in to PRTG 
-	- Goto setup -> account settings -> Notification Templates
-	- Create a new template with the following settings:
-		- Basic Settings
-			- Template Name (something meaningfull for you)
-			- Status: Started
-		- Notification Summarization
-			- Method: Always notify ASAP, never summarize
-		- Enable Execute Program
-			- Program File: Select PRTGNotificationHomeAssistant.bat
-			- Parameters: --key "KEY" -u "HASS URL" -l "LIGHT" -c "%colorofstate" -s %sensorid
-				- the KEY is set in Home Assistant
-				- the HASS URL is the plain URL of you Home Assistant
-				- the LIGHT is the entity_id of you light (or Hue group) that should react on the notification
-				- %colorofstate is a PRTG variable (please don't change)
-				- %sensorid is a PRTG variable (please don't change)
-	- now click Save
-	- then you will have something like: ![Settings](https://raw.githubusercontent.com/jaydouble/PRTGNotificationHomeAssistant/master/doc/notification%20settings.png "PRTG Notification Settings")
-- then set the notification trigger
-	- Sign in to PRTG
-	- Goto Devices -> Notification Triggers
-		- Creating a trigger use the settings:
-			- When sensor state is Down for at least 0 seconds, perform (You beautifull naming of the template you created)
-			- When sensor state is Down for at least 300 seconds, perform (You beautifull naming of the template you created) and repeat every 0 minutes 
-			- When sensor leaves Down state after a notification was triggered, perform (You beautifull naming of the template you created)
-		- repeat this for 
-			- Warning
-			- Unusual
-			- Unknown
-			- Up
-	- and you will have something like: ![Triggers](https://raw.githubusercontent.com/jaydouble/PRTGNotificationHomeAssistant/master/doc/notification%20triggers.png "PRTG Notification Truggers")
+To create a token, you can follow: [Paessler tutorial](https://www.paessler.com/manuals/prtg/api_keys)
+
+Save all config, restart your home assistant, and it is working. Hopefully...
+
+If you like, you can add to your dashboard to config automotions:
+```yaml
+type: horizontal-stack
+cards:
+  - type: entities
+    entities:
+      - entity: input_datetime.lighton
+      - entity: automation.lightson
+    show_header_toggle: false
+    title: Lichten aan
+  - type: entities
+    entities:
+      - entity: input_datetime.lightoff
+      - entity: automation.lightsoff
+    show_header_toggle: false
+    title: Lichten uit
+```
+and to see all statusses
+```yaml
+type: entities
+entities:
+  - entity: sensor.prtgsensors
+  - entity: sensor.prtg_upsens
+  - entity: sensor.prtg_alarms
+  - entity: sensor.prtg_warnsens
+  - entity: sensor.prtg_pausedsens
+  - entity: sensor.prtg_unknownsens
+  - entity: sensor.prtg_script
+title: PRTG
+state_color: true
+```
