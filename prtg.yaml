@@ -170,9 +170,12 @@ automation:
           - thu
           - fri
     action:
-      service: "script.{{ states('sensor.prtg_script') }}"
-      data:
-        light: !secret noclight
+      - service: light.turn_on
+        target:
+          entity_id: !secret noclight
+      - service: "script.{{ states('sensor.prtg_script') }}"
+        data:
+          light: !secret noclight
     mode: single
 
   - alias: lightsoff
