@@ -29,10 +29,11 @@ homeassistant:
 sensor:
   - platform: rest
     name: PrtgSensors
-    resource: !secret prtg-url
+    resource: !secret prtg_url
+    verify_ssl: false
     params:
       id: 0
-      apitoken: !secret prtg-api-token
+      apitoken: !secret prtg_api_token
     json_attributes:
       - Alarms
       - UpSens
@@ -47,27 +48,28 @@ sensor:
       {% elif state_attr('sensor.prtgsensors', 'PausedSens')|int(0) > 0 %}
       {{ state_attr('sensor.prtgsensors', 'PausedSens') }} Paused
       {% endif %}
-  - platform: template
-    sensors:
-      prtg_alarms:
-        friendly_name: "PRTG Alarm"
-        value_template: "{{ state_attr('sensor.prtgsensors', 'Alarms') | int(0)}}"
-      prtg_upsens:
-        friendly_name: "PRTG UpSens"
-        value_template: "{{ state_attr('sensor.prtgsensors', 'UpSens') | int(0) }}"
-      prtg_unknownsens:
-        friendly_name: "PRTG UnknownSens"
-        value_template: "{{ state_attr('sensor.prtgsensors', 'UnknownSens') | int(0) }}"
-      prtg_warnsens:
-        friendly_name: "PRTG WarnSens"
-        value_template: "{{ state_attr('sensor.prtgsensors', 'WarnSens') | int(0) }}"
-      prtg_pausedsens:
-        friendly_name: "PRTG PausedSens"
-        value_template: "{{ state_attr('sensor.prtgsensors', 'PausedSens') | int(0) }}"
+
+template:
+  - sensor:
+      - default_entity_id: sensor.prtg_alarms
+        name: "PRTG Alarm"
+        state: "{{ state_attr('sensor.prtgsensors', 'Alarms') | int(0)}}"
+      - default_entity_id: sensor.prtg_upsens
+        name: "PRTG UpSens"
+        state: "{{ state_attr('sensor.prtgsensors', 'UpSens') | int(0) }}"
+      - default_entity_id: sensor.prtg_unknownsens
+        name: "PRTG UnknownSens"
+        state: "{{ state_attr('sensor.prtgsensors', 'UnknownSens') | int(0) }}"
+      - default_entity_id: sensor.prtg_warnsens
+        name: "PRTG WarnSens"
+        state: "{{ state_attr('sensor.prtgsensors', 'WarnSens') | int(0) }}"
+      - default_entity_id: sensor.prtg_pausedsens
+        name: "PRTG PausedSens"
+        state: "{{ state_attr('sensor.prtgsensors', 'PausedSens') | int(0) }}"
       # helper sensors for light
-      prtg_script:
-        friendly_name: "PRTG Alarm Color"
-        value_template: >
+      - default_entity_id: sensor.prtg_script
+        name: "PRTG Alarm Color"
+        state: >
           {% if state_attr('sensor.prtgsensors', 'Alarms')|int(0) > 0 %}
           prtg_alarm
           {% elif state_attr('sensor.prtgsensors', 'WarnSens')|int(0) > 0 %}
@@ -82,7 +84,7 @@ script:
   prtg_alarm:
     alias: PRTG Alarm
     sequence:
-      - service: light.turn_on
+      - action: light.turn_on
         data:
           entity_id: "{{ light }}"
           color_name: red
@@ -94,7 +96,7 @@ script:
   prtg_warning:
     alias: PRTG Warning
     sequence:
-      - service: light.turn_on
+      - action: light.turn_on
         data:
           entity_id: "{{ light }}"
           color_name: orange
@@ -106,7 +108,7 @@ script:
   prtg_paused:
     alias: PRTG Paused
     sequence:
-      - service: light.turn_on
+      - action: light.turn_on
         data:
           entity_id: "{{ light }}"
           color_name: blue
@@ -117,7 +119,7 @@ script:
   prtg_ok:
     alias: PRTG OK
     sequence:
-      - service: light.turn_on
+      - action: light.turn_on
         data:
           entity_id: "{{ light }}"
           color_name: green
@@ -143,15 +145,19 @@ automation:
   - alias: Light from PRTG
     description: ""
     trigger:
-      - platform: state
+      - trigger: state
         entity_id:
           - sensor.prtgsensors
+      - trigger: state
+        entity_id:
+          - light.hue_licht_2
+        from: unavailable
     condition:
       - condition: state
         entity_id: light.noc
         state: "on"
     action:
-      service: "script.{{ states('sensor.prtg_script') }}"
+      action: "script.{% if states('sensor.prtg_script') == 'unknown' %}{{states('sensor.prtg_script')}}{%else%}prtg_warning{%endif%}"
       data:
         light: !secret noclight
     mode: single
@@ -159,7 +165,7 @@ automation:
   - alias: lightson
     description: "Turn lights on"
     trigger:
-      - platform: time
+      - trigger: time
         at: input_datetime.lighton
     condition:
       - condition: time
@@ -170,10 +176,10 @@ automation:
           - thu
           - fri
     action:
-      - service: light.turn_on
+      - action: light.turn_on
         target:
           entity_id: !secret noclight
-      - service: "script.{{ states('sensor.prtg_script') }}"
+      - action: "script.{{ states('sensor.prtg_script') }}"
         data:
           light: !secret noclight
     mode: single
@@ -181,9 +187,9 @@ automation:
   - alias: lightsoff
     description: "Turn lights off"
     trigger:
-      - platform: time
+      - trigger: time
         at: input_datetime.lightoff
     action:
-      - service: light.turn_off
+      - action: light.turn_off
         entity_id: !secret noclight
     mode: single
